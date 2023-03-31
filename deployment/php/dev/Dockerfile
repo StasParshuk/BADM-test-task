@@ -31,6 +31,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php --install-dir=/usr/local/bin/ --filename=composer  --version=2.4.4 \
     && php -r "unlink('composer-setup.php');"
 RUN chown -R www-data ~/.composer
+RUN curl -sS https://get.symfony.com/cli/installer | bash
+RUN mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 
 RUN usermod -u 1000 www-data
 

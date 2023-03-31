@@ -13,7 +13,6 @@ services:
             PHP_IDE_CONFIG: "serverName=Docker"
         links:
             - "dev_db:db"
-            - "dev_redis:redis"
         networks:
             - internal
 
@@ -46,12 +45,6 @@ services:
             - internal
 
 
-    dev_redis:
-        networks:
-            - internal
-        image: redis:7.0-alpine
-        ports:
-            - "6379"
 
 networks:
     internal:
