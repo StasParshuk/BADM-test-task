@@ -1,0 +1,5 @@
+SHELL=/bin/bash
+PATH=/usr/local/bin
+MAILTO=root
+
+@daily php /usr/src/app/bin/console tasks:daily 1>> /dev/null 2>&1

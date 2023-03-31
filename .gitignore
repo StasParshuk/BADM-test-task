@@ -8,6 +8,7 @@
 /var/
 /vendor/
 /.idea
+/nginx_log
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
