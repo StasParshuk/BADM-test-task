@@ -40,10 +40,10 @@ sudo sysctl -w vm.max_map_count=262144
 
 
 
-if [[ ! -d "database_data" ]]; then
-    mkdir database_data
+if [[ ! -d "public/images/products" ]]; then
+    mkdir public/images/products
 fi
-
+safeRunCommand "chmod 777 -R public/images"
 
 echo "Executing docker-compose..."
 if [[ "${REBUILD}" = TRUE ]]; then

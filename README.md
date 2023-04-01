@@ -11,3 +11,7 @@
     Все це повинно працювати в докері
     тобто
     (Mysql,RabbitMQ,Apahce/Nginx,PHP)
+
+# установка
+git clone git@github.com:StasParshuk/BADM-test-task.git
+запуск из папки с проектом ./run.sh
