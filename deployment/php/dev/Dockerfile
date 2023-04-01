@@ -13,8 +13,11 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
         cron \
         ffmpeg \
         libfreetype6-dev \
+        librabbitmq-dev \
         libjpeg62-turbo-dev \
-        libpng-dev
+        libpng-dev \
+    && pecl install amqp \
+    && docker-php-ext-enable amqp
 #        && pecl install xdebug-3.2.0 \
 #        && docker-php-ext-enable xdebug
 #Add required php extensions: pgsql, zip, etc

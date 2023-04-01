@@ -13,6 +13,7 @@ services:
             PHP_IDE_CONFIG: "serverName=Docker"
         links:
             - "dev_db:db"
+            - "rabbitmq:rabbitmq"
         networks:
             - internal
 
@@ -27,6 +28,7 @@ services:
             - ./deployment/config/default.dev.conf:/etc/nginx/conf.d/default.conf:ro
         links:
             - "dev_php:php"
+            - "rabbitmq:rabbitmq"
         networks:
             - internal
 
@@ -43,6 +45,17 @@ services:
             POSTGRES_PASSWORD: EtSKF84a7nWS
         networks:
             - internal
+
+    rabbitmq:
+
+        image: rabbitmq:3.9-management
+        ports:
+            - '5672:5672'
+            - '15672:15672'
+        networks:
+            - internal
+volumes:
+    rabbitmq:
 
 
 
