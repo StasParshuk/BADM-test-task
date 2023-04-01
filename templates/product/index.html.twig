@@ -25,7 +25,7 @@
                 <td>{{ product.id }}</td>
                 <td>{{ product.name }}</td>
                 <td>{{ product.sku }}</td>
-                <td>{{ product.image }}</td>
+                <td><img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.name }}" /></td>
                 <td>{{ product.description }}</td>
                 <td>{{ product.price }}</td>
                 <td>{{ product.isActive ? 'Yes' : 'No' }}</td>
