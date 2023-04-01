@@ -1,34 +1,18 @@
 FROM php:8.2-fpm
 
 #Install extra packages
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        libzip-dev \
-        libpq-dev \
-        libicu-dev\
-        git \
-        zip \
-        unzip \
-        nano \
-        netcat \
-        cron \
-        ffmpeg \
-        libfreetype6-dev \
-        librabbitmq-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
+RUN apt update \
+    && apt install -y zlib1g-dev g++ git libicu-dev zip libzip-dev zip  librabbitmq-dev \
+    && docker-php-ext-install intl opcache pdo pdo_mysql \
+    && pecl install apcu \
+    && docker-php-ext-enable apcu \
+    && docker-php-ext-configure zip \
+    && docker-php-ext-install zip \
     && pecl install amqp \
     && docker-php-ext-enable amqp
 #        && pecl install xdebug-3.2.0 \
 #        && docker-php-ext-enable xdebug
 #Add required php extensions: pgsql, zip, etc
-RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-configure zip\
-    && docker-php-ext-configure intl \
-    && docker-php-ext-install pdo pdo_pgsql pgsql zip intl \
-    && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
-    && docker-php-ext-install gd \
-    && docker-php-ext-install bcmath \
-    && docker-php-ext-install opcache
 #Install composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php --install-dir=/usr/local/bin/ --filename=composer  --version=2.4.4 \
@@ -40,9 +24,6 @@ RUN mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 RUN usermod -u 1000 www-data
 
 ADD ./php.ini /usr/local/etc/php/php.ini
-COPY entrypoint.sh /usr/local/bin/
-COPY crontab /etc/
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 CMD ["php-fpm"]

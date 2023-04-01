@@ -14,8 +14,6 @@ services:
         links:
             - "dev_db:db"
             - "rabbitmq:rabbitmq"
-        networks:
-            - internal
 
     dev_web:
         image: nginx:stable
@@ -29,22 +27,19 @@ services:
         links:
             - "dev_php:php"
             - "rabbitmq:rabbitmq"
-        networks:
-            - internal
 
     dev_db:
-        image: postgres:11.1
+        image: mysql:8
+        command: ["--default-authentication-plugin=mysql_native_password"]
         ports:
-            - "5433:5432"
+            - "3306:3306"
         volumes:
-            - ./database_data:/var/lib/postgresql/data
+            - ./mysql:/var/lib/mysql
         environment:
-            POSTGRES_ROOT_PASSWORD: EtSKF84a7nWS
-            POSTGRES_DB: symfony
-            POSTGRES_USER: symfony
-            POSTGRES_PASSWORD: EtSKF84a7nWS
-        networks:
-            - internal
+            MYSQL_ROOT_PASSWORD: secret
+            MYSQL_DATABASE: symfony
+            MYSQL_USER: symfony
+            MYSQL_PASSWORD: symfony
 
     rabbitmq:
 
@@ -52,15 +47,7 @@ services:
         ports:
             - '5672:5672'
             - '15672:15672'
-        networks:
-            - internal
 volumes:
     rabbitmq:
 
 
-
-networks:
-    internal:
-        driver: bridge
-        ipam:
-            driver: default
